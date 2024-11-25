@@ -78,9 +78,6 @@ func toUpperReq(req model.SubscribeReq) model.SubscribeReq {
 	req.InstType = strings.ToUpper(req.InstType)
 	req.InstId = strings.ToUpper(req.InstId)
 	req.Channel = strings.ToLower(req.Channel)
-	if "" == req.Coin {
-		req.Coin = strings.ToLower(req.InstId)
-	}
 	return req
 
 }
@@ -90,7 +87,6 @@ func (p *BitgetWsClient) Subscribe(list []model.SubscribeReq, listener common.On
 	var args []interface{}
 	for i := 0; i < len(list); i++ {
 		req := toUpperReq(list[i])
-		args = append(args, req)
 
 		p.bitgetBaseWsClient.ScribeMap[req] = listener
 		p.bitgetBaseWsClient.AllSuribe.Add(req)
