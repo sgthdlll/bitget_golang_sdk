@@ -165,7 +165,7 @@ func (p *BitgetBaseWsClient) ReadLoop() {
 			applogger.Info("Read error: %s", err)
 			continue
 		}
-		//p.LastReceivedTime = time.Now()
+		p.LastReceivedTime = time.Now()
 		//message := string(buf)
 
 		//if message == "pong" {
