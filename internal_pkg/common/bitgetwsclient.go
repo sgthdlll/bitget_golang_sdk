@@ -13,6 +13,8 @@ import (
 	"time"
 )
 
+var publicMsgChan = make(chan []byte, 5000)
+
 type BitgetBaseWsClient struct {
 	NeedLogin        bool
 	Connection       bool
@@ -163,36 +165,37 @@ func (p *BitgetBaseWsClient) ReadLoop() {
 			applogger.Info("Read error: %s", err)
 			continue
 		}
-		p.LastReceivedTime = time.Now()
-		message := string(buf)
+		//p.LastReceivedTime = time.Now()
+		//message := string(buf)
 
-		if message == "pong" {
-			applogger.Info("Keep connected:" + message)
-			continue
-		}
-		jsonMap := internal.JSONToMap(message)
-
-		v, e := jsonMap["code"]
-
-		if e && int(v.(float64)) != 0 {
-			p.ErrorListener(message)
-			continue
-		}
-
-		v, e = jsonMap["event"]
-		if e && v == "login" {
-			applogger.Info("login msg:" + message)
-			p.LoginStatus = true
-			continue
-		}
-
-		v, e = jsonMap["data"]
-		if e {
-			listener := p.GetListener(jsonMap["arg"])
-			listener(message)
-			continue
-		}
-		p.handleMessage(message)
+		//if message == "pong" {
+		//	applogger.Info("Keep connected:" + message)
+		//	continue
+		//}
+		//jsonMap := internal.JSONToMap(message)
+		//
+		//v, e := jsonMap["code"]
+		//
+		//if e && int(v.(float64)) != 0 {
+		//	p.ErrorListener(message)
+		//	continue
+		//}
+		//
+		//v, e = jsonMap["event"]
+		//if e && v == "login" {
+		//	applogger.Info("login msg:" + message)
+		//	p.LoginStatus = true
+		//	continue
+		//}
+		//
+		//v, e = jsonMap["data"]
+		//if e {
+		//	listener := p.GetListener(jsonMap["arg"])
+		//	listener(message)
+		//	continue
+		//}
+		fmt.Println(len(publicMsgChan))
+		publicMsgChan <- buf
 	}
 
 }
@@ -217,6 +220,9 @@ func (p *BitgetBaseWsClient) GetListener(argJson interface{}) OnReceive {
 
 type OnReceive func(message string)
 
-func (p *BitgetBaseWsClient) handleMessage(msg string) {
-	fmt.Println("default:" + msg)
+func (p *BitgetBaseWsClient) handleMessage(msgBytes []byte) {
+	fmt.Println(len(publicMsgChan))
+}
+func (p *BitgetBaseWsClient) GetWsChan() chan []byte {
+	return publicMsgChan
 }
