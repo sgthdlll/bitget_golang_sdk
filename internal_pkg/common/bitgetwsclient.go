@@ -162,6 +162,8 @@ func (p *BitgetBaseWsClient) ReadLoop() {
 
 		_, buf, err := p.WebSocketClient.ReadMessage()
 		if err != nil {
+			p.disconnectWebSocket()
+			p.ConnectWebSocket()
 			applogger.Info("Read error: %s", err)
 			continue
 		}
