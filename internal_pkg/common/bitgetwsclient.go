@@ -166,8 +166,6 @@ func (p *BitgetBaseWsClient) ReadLoop() {
 		p.LastReceivedTime = time.Now()
 		message := string(buf)
 
-		applogger.Info("rev:" + message)
-
 		if message == "pong" {
 			applogger.Info("Keep connected:" + message)
 			continue
