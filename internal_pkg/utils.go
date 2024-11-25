@@ -3,7 +3,6 @@ package internal_pkg
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"github.com/sgthdlll/bitget_golang_sdk/constants"
 	"net/http"
 	"sort"
@@ -13,7 +12,8 @@ import (
 )
 
 func TimesStamp() string {
-	return fmt.Sprint("%d", time.Now().UnixNano()/1000000)
+	timesStamp := time.Now().UnixMilli()
+	return strconv.FormatInt(timesStamp, 10)
 }
 
 func TimesStampSec() string {
