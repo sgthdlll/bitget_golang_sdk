@@ -194,7 +194,6 @@ func (p *BitgetBaseWsClient) ReadLoop() {
 		//	listener(message)
 		//	continue
 		//}
-		fmt.Println(len(publicMsgChan))
 		publicMsgChan <- buf
 	}
 
@@ -221,7 +220,7 @@ func (p *BitgetBaseWsClient) GetListener(argJson interface{}) OnReceive {
 type OnReceive func(message string)
 
 func (p *BitgetBaseWsClient) handleMessage(msgBytes []byte) {
-	fmt.Println(len(publicMsgChan))
+
 }
 func (p *BitgetBaseWsClient) GetWsChan() chan []byte {
 	return publicMsgChan
