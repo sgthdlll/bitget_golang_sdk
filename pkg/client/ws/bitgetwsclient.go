@@ -108,3 +108,7 @@ func (p *BitgetWsClient) SendMessage(msg string) {
 func (p *BitgetWsClient) SendMessageByType(req model.WsBaseReq) {
 	p.bitgetBaseWsClient.SendByType(req)
 }
+
+func (p *BitgetWsClient) GetWsChan() chan []byte {
+	return p.bitgetBaseWsClient.GetWsChan()
+}
