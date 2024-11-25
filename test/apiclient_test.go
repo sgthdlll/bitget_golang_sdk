@@ -1,10 +1,10 @@
 package test
 
 import (
-	"bitget/internal"
-	"bitget/pkg/client"
-	"bitget/pkg/client/v1"
 	"fmt"
+	internal "github.com/sgthdlll/bitget_golang_sdk/internal_pkg"
+	"github.com/sgthdlll/bitget_golang_sdk/pkg/client"
+	"github.com/sgthdlll/bitget_golang_sdk/pkg/client/v1"
 	"testing"
 )
 
